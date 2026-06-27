@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Profile - STARTech PMS{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="card shadow border-0 rounded-3">
+            <div class="card-header bg-dark text-white p-4">
+                <h4 class="mb-0 fw-bold">Professional Account Profile</h4>
+                <p class="small text-muted mb-0">Manage your engineering display identity cards.</p>
+            </div>
+            <div class="card-body p-4 p-sm-5">
+                
+                <form method="POST" enctype="multipart/form-data" novalidate>
+                    {% csrf_token %}
+                    
+                    <div class="row mb-4 align-items-center">
+                        <div class="col-sm-3 text-center">
+                            <img src="{{ user.profile.profile_picture.url }}" alt="Profile Avatar" class="rounded-circle img-thumbnail shadow-sm mb-2" style="width: 100px; height: 100px; object-fit: cover;">
+                        </div>
+                        <div class="col-sm-9">
+                            <label class="form-label fw-bold text-dark">Update Avatar Image</label>
+                            {{ form.profile_picture }}
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold text-secondary">Professional Bio</label>
+                        {{ form.bio }}
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold text-secondary">Contact Phone</label>
+                            {{ form.phone_number }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold text-secondary">GitHub Repository Link</label>
+                            {{ form.github_link }}
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold text-secondary">LinkedIn Profile Link</label>
+                        {{ form.linkedin_link }}
+                    </div>
+
+                    <div class="d-grid gap-2 mt-4 d-md-flex justify-content-md-end">
+                        <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary btn-md fw-bold px-4 me-md-2">Back to Dashboard</a>
+                        <button class="btn btn-primary btn-md fw-bold px-5 shadow-sm" type="submit">Save Changes</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

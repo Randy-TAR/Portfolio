@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Developer Dashboard - STARTech PMS{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="p-5 mb-4 bg-light rounded-3 shadow-sm border">
+                <div class="container-fluid py-2">
+                    <h1 class="display-5 fw-bold text-dark">Developer Dashboard</h1>
+                    <p class="col-md-8 fs-4 text-muted">Welcome back, <span class="text-primary fw-semibold">{{ user.username }}</span>. Secure session clearance verified.</p>
+                    <hr class="my-4">
+                    <p class="small text-secondary font-monospace">System Node Status: Operational // Database Row ID: {{ user.id }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -127,3 +127,10 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Tell Django where to send users who are blocked by security guards
+LOGIN_URL = '/accounts/login/'
+
+# Tell Django where to send users immediately after they log in successfully
+LOGIN_REDIRECT_URL = '/accounts/dashboard/'
+

@@ -3,6 +3,8 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from .forms import ProfileUpdateForm
 
 
 def register_view(request):
@@ -25,7 +27,7 @@ def login_view(request):
             user = form.get_user() # Grabs the validated user object from the database
             auth_login(request, user) # Creates a secure session cookie in the browser
             messages.success(request, f"Welcome back, {user.username}!")
-            return redirect('register') # Temporary redirect until we build the dashboard!
+            return redirect('dashboard') # Temporary redirect until we build the dashboard!
     else:
         form = AuthenticationForm()
         
@@ -36,3 +38,27 @@ def logout_view(request):
     auth_logout(request) # Clears session tracking variables instantly
     messages.info(request, "You have been successfully logged out.")
     return redirect('login') # Sends the user back to the login page cleanly
+
+@login_required
+def dashboard_view(request):
+    # This view will only run if the user has logged in successfully
+    return render(request, 'accounts/dashboard.html')
+
+@login_required
+def profile_view(request):
+    # Fetch the profile instance belonging exclusively to the logged-in user
+    profile = request.user.profile 
+    
+    if request.method == 'POST':
+        # Pass request.FILES to safely handle image streams coming from the browser
+        form = ProfileUpdateForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your professional profile has been updated successfully!")
+            return redirect('profile')
+    else:
+        # Pre-populate the form inputs with the data currently stored in PostgreSQL
+        form = ProfileUpdateForm(instance=profile)
+        
+    return render(request, 'accounts/profile.html', {'form': form})
+
