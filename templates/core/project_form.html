@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if is_edit %}Edit {{ project.title }}{% else %}Add New Project{% endif %} - STARTech PMS{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow border-0 rounded-3">
+            <div class="card-header {% if is_edit %}bg-dark text-white{% else %}bg-primary text-white{% endif %} p-4">
+                <h4 class="mb-0 fw-bold">{% if is_edit %}Modify '{{ project.title }}'{% else %}Document New Engineering Project{% endif %}</h4>
+                <p class="small mb-0 opacity-75">Update system specs, links, and operational configurations.</p>
+            </div>
+            <div class="card-body p-4 p-sm-5">
+                
+                <form method="POST" novalidate>
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-bold text-dark">Project Title</label>
+                        {{ form.title }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold text-dark">System Architecture & Description</label>
+                        {{ form.description }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold text-dark">Core Technologies Used</label>
+                        {{ form.technologies_used }}
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold text-dark">Live Application URL</label>
+                            {{ form.project_url }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold text-dark">Source Code Repository Link</label>
+                            {{ form.repository_url }}
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 mt-4 d-md-flex justify-content-md-end">
+                        <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary px-4 me-md-2 fw-bold">Cancel</a>
+                        <button type="submit" class="btn {% if is_edit %}btn-dark{% else %}btn-primary{% endif %} px-5 shadow-sm fw-bold">
+                            {% if is_edit %}Save Updates{% else %}Publish Project{% endif %}
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

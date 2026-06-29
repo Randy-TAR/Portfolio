@@ -4,6 +4,7 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from core.models import Project
 from .forms import ProfileUpdateForm
 
 
@@ -39,10 +40,17 @@ def logout_view(request):
     messages.info(request, "You have been successfully logged out.")
     return redirect('login') # Sends the user back to the login page cleanly
 
+
 @login_required
 def dashboard_view(request):
-    # This view will only run if the user has logged in successfully
-    return render(request, 'accounts/dashboard.html')
+    # 2. Fetch all projects belonging exclusively to the logged-in user
+    user_projects = request.user.projects.all() 
+    
+    # 3. Pass the projects data to the template using the context dictionary
+    context = {
+        'projects': user_projects
+    }
+    return render(request, 'accounts/dashboard.html', context)
 
 @login_required
 def profile_view(request):
