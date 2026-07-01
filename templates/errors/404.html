@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Page Not Found (404) - STARTech PMS{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center py-5">
+    <div class="col-md-6 text-center">
+        <h1 class="display-1 fw-bold text-secondary mb-0">404</h1>
+        <div class="text-muted font-monospace small mb-4">ERROR_CODE: ROUTE_NOT_FOUND</div>
+        
+        <h3 class="fw-bold text-dark mb-3">Requested Resource Missing</h3>
+        <p class="text-secondary mb-4">
+            The workspace route path you are trying to access does not exist, has been archived, or moved to an alternative system enclave.
+        </p>
+        
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <a href="{% url 'explorer' %}" class="btn btn-primary px-4 fw-bold shadow-sm me-sm-2">Go to Explore Registry</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary px-4 fw-bold">Return to Dashboard</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

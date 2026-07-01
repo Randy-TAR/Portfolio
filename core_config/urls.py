@@ -20,7 +20,12 @@ from accounts import views
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.split if hasattr(admin.site, 'split') else admin.site.urls),
     path('accounts/', include('accounts.urls')),
-    path('accounts/', include('core.urls')),
+    path('', include('core.urls')),
+    path('', include('communications.urls')),
 ]
+
+# CRITICAL CORE REGISTRATION OVERRIDES:
+handler404 = 'core_config.views.custom_page_not_found_view'
+handler403 = 'core_config.views.custom_permission_denied_view'

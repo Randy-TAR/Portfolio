@@ -5,6 +5,7 @@ from django.contrib.auth import logout as auth_logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from core.models import Project
+from django.contrib.auth.models import User
 from .forms import ProfileUpdateForm
 
 
@@ -43,12 +44,19 @@ def logout_view(request):
 
 @login_required
 def dashboard_view(request):
-    # 2. Fetch all projects belonging exclusively to the logged-in user
+    # 1. Fetch user-specific projects matching our Day 17 pattern
     user_projects = request.user.projects.all() 
     
-    # 3. Pass the projects data to the template using the context dictionary
+    # 2. Compute lean database-level metrics
+    total_user_projects = user_projects.count() # Counts ONLY this developer's records
+    global_system_projects = Project.objects.count() # Counts EVERY project on the platform
+    total_platform_engineers = User.objects.count() # Counts total registered accounts
+    
     context = {
-        'projects': user_projects
+        'projects': user_projects,
+        'user_project_count': total_user_projects,
+        'global_project_count': global_system_projects,
+        'total_engineers': total_platform_engineers,
     }
     return render(request, 'accounts/dashboard.html', context)
 

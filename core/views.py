@@ -93,3 +93,8 @@ def explorer_view(request):
     }
     return render(request, 'core/explorer.html', context)
 
+def project_detail_view(request, pk):
+    # Fetch the specific project matching the URL Primary Key, optimized with an owner JOIN
+    project = get_object_or_404(Project.objects.select_related('owner'), pk=pk)
+    
+    return render(request, 'core/project_detail.html', {'project': project})

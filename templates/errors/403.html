@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Access Denied (403) - STARTech PMS{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center py-5">
+    <div class="col-md-6 text-center">
+        <h1 class="display-1 fw-bold text-danger mb-0">403</h1>
+        <div class="text-muted font-monospace small mb-4">ERROR_CODE: ACCESS_PERMISSIONS_VIOLATION</div>
+        
+        <h3 class="fw-bold text-dark mb-3">Security Clearance Required</h3>
+        <p class="text-secondary mb-4">
+            Access denied. Your authentication session tokens do not hold row-level encryption permissions to modify or alter this user asset.
+        </p>
+        
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <a href="{% url 'dashboard' %}" class="btn btn-dark px-4 fw-bold shadow-sm me-sm-2">Back to Secure Workstation</a>
+            <a href="{% url 'explorer' %}" class="btn btn-outline-secondary px-4 fw-bold">Browse Public Archives</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

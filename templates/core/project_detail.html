@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ project.title }} - Architecture Specification{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    
+    <div class="mb-4">
+        <a href="{% url 'explorer' %}" class="text-decoration-none small fw-bold text-secondary">&larr; Back to Global Registry</a>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 rounded-3 p-4 p-sm-5">
+                <span class="text-uppercase tracking-wider small fw-bold text-primary font-monospace mb-2 d-block">System Specification</span>
+                <h1 class="fw-bold text-dark mb-3">{{ project.title }}</h1>
+                
+                <div class="d-flex align-items-center mb-4 text-muted small">
+                    <span class="me-3">Published by <strong class="text-dark">@{{ project.owner.username }}</strong></span>
+                    <span>&bull;</span>
+                    <span class="ms-3">Archived on {{ project.created_at|date:"F d, Y" }}</span>
+                </div>
+                
+                <hr class="my-4 opacity-25">
+
+                <h5 class="fw-bold text-secondary mb-3">Architecture & Functional Requirements</h5>
+                <p class="text-dark leading-relaxed style-description" style="white-space: pre-line;">{{ project.description|linebreaksbr }}</p>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card shadow-sm border-0 rounded-3 p-4 mb-4 bg-dark text-white">
+                <h5 class="fw-bold mb-3 text-primary">Technical Specs</h5>
+                <div class="mb-4">
+                    <span class="small text-muted d-block font-monospace text-uppercase mb-2">Engine Stack:</span>
+                    <span class="badge bg-secondary p-2 font-monospace text-white">{{ project.technologies_used }}</span>
+                </div>
+                <div class="mb-2">
+                    <span class="small text-muted d-block font-monospace text-uppercase mb-1">Database Layer:</span>
+                    <span class="small fw-semibold">PostgreSQL Relational Storage</span>
+                </div>
+            </div>
+
+            <div class="card shadow-sm border-0 rounded-3 p-4">
+                <h5 class="fw-bold text-dark mb-3">Deployment Enclaves</h5>
+                <div class="d-grid gap-2">
+                    {% if project.project_url %}
+                        <a href="{{ project.project_url }}" target="_blank" class="btn btn-primary fw-bold p-2 shadow-sm">View Live Production Demo</a>
+                    {% else %}
+                        <button class="btn btn-outline-secondary p-2 fw-semibold" disabled>No Public Live Deployment</button>
+                    {% endif %}
+
+                    {% if project.repository_url %}
+                        <a href="{{ project.repository_url }}" target="_blank" class="btn btn-outline-dark fw-bold p-2">Explore Source Repository</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

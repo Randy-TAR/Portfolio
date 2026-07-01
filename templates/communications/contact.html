@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact & Support - STARTech PMS{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center py-4">
+    <div class="col-md-8 col-lg-7">
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="card shadow border-0 rounded-3">
+            <div class="card-header bg-dark text-white p-4">
+                <h4 class="mb-0 fw-bold">Ecosystem Communications Hub</h4>
+                <p class="small text-muted mb-0">Submit collaboration blueprints, system inquiries, or open system bugs tickets.</p>
+            </div>
+            <div class="card-body p-4 p-sm-5">
+                
+                <form method="POST" novalidate>
+                    {% csrf_token %}
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold text-dark">Full Name</label>
+                            {{ form.sender_name }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold text-dark">Email Address</label>
+                            {{ form.sender_email }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-7 mb-3">
+                            <label class="form-label fw-bold text-dark">Subject</label>
+                            {{ form.subject }}
+                        </div>
+                        <div class="col-md-5 mb-3">
+                            <label class="form-label fw-bold text-dark">Inquiry Classification</label>
+                            {{ form.category }}
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold text-dark">Detailed Message Description</label>
+                        {{ form.message }}
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg fw-bold p-3 shadow-sm">Transmit Secure Message</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
