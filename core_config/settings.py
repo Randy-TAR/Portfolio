@@ -83,8 +83,8 @@ DATABASES = {
         'NAME': 'portfolio_db',
         'USER': 'postgres',
         'PASSWORD': 'Admin',
-        'HOST': '',   
-        'PORT': '',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
